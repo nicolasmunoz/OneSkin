@@ -1,14 +1,8 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:http/http.dart';
 import 'package:one_skin/components/tutorial_view.dart';
-import 'package:one_skin/services/http_service.dart';
+import 'package:one_skin/constants/constants.dart';
 import 'package:one_skin/views/photo_review_view.dart';
-import 'package:one_skin/views/results_view.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({super.key});
@@ -22,15 +16,18 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   bool _isCameraInitialized = false;
   late final List<CameraDescription> _cameras;
 
-  bool _showTutorial = false;
+  bool _showTutorial = true;
 
   double _currentScale = 1.0;
-  double _baseScale = 1.0;
-  double _maxScale = 10;
+  final double _baseScale = 1.0;
+  final double _maxScale = 10;
 
   @override
   void initState() {
     initCamera();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _showDialog();
+    });
     super.initState();
   }
 
@@ -39,17 +36,14 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     if (_isCameraInitialized) {
       return Scaffold(
         appBar: AppBar(
+          title: Images.logo,
           actions: [
             IconButton(
                 onPressed: () {
                   _toggleTutorial();
-                  showDialog(
-                      context: context,
-                      builder: (_) => TutorialView(
-                            onPressed: _toggleTutorial,
-                          ));
+                  _showDialog();
                 },
-                icon: Icon(Icons.question_mark))
+                icon: const Icon(Icons.question_mark))
           ],
         ),
         body: SafeArea(child: _buildView()),
@@ -61,13 +55,23 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     }
   }
 
+  // Opens the dialog of instructions
+  void _showDialog() => showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) => TutorialView(
+            onPressed: _toggleTutorial,
+          ));
+
+  // Toggles whether to display camera preview
   void _toggleTutorial() => setState(() {
         _showTutorial = !_showTutorial;
       });
 
+  // Builds the main camera view
   Widget _buildView() {
     return Column(children: [
-      SizedBox(
+      const SizedBox(
         height: 50,
       ),
       Container(
@@ -81,32 +85,33 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
               child: ModalRoute.of(context)?.isCurrent ?? false
                   ? _buildCameraView()
                   : Container())),
-      Spacer(),
+      const Spacer(),
       _buildButton(),
-      SizedBox(
+      const SizedBox(
         height: 50,
       ),
-      Text('Tap camera button when ready')
+      const Text('Tap camera button when ready'),
+      const SizedBox(
+        height: 50,
+      ),
     ]);
   }
 
+  // Builds the camera preview window with zoom slider
   Widget _buildCameraView() {
     return Stack(
       children: [
-        GestureDetector(
-            onScaleStart: _handleScaleStart,
-            onScaleUpdate: _handleScaleUpdate,
-            child: AspectRatio(
-              aspectRatio: 1, // Set aspect ratio to 1:1 for a square
-              child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: SizedBox(
-                      width: _controller!.value.previewSize?.height,
-                      height: _controller!.value.previewSize?.width,
-                      child: CameraPreview(
-                        _controller!,
-                      ))),
-            )),
+        AspectRatio(
+          aspectRatio: 1, // Set aspect ratio to 1:1 for a square
+          child: FittedBox(
+              fit: BoxFit.cover,
+              child: SizedBox(
+                  width: _controller!.value.previewSize?.height,
+                  height: _controller!.value.previewSize?.width,
+                  child: CameraPreview(
+                    _controller!,
+                  ))),
+        ),
         Padding(
           padding: const EdgeInsets.only(right: 10),
           child: Row(
@@ -115,6 +120,7 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
               RotatedBox(
                   quarterTurns: -1,
                   child: Slider(
+                    activeColor: Color(4280960632),
                     min: 1,
                     max: _maxScale,
                     onChanged: _handleSliderUpdate,
@@ -127,6 +133,7 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     );
   }
 
+  // Handles the slider update and adjusts the camera zoom
   Future<void> _handleSliderUpdate(double value) async {
     setState(() {
       _currentScale = value;
@@ -135,26 +142,17 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     await _controller!.setZoomLevel(_currentScale);
   }
 
-  void _handleScaleStart(ScaleStartDetails details) {
-    _baseScale = _currentScale;
-  }
-
-  Future<void> _handleScaleUpdate(ScaleUpdateDetails details) async {
-    _currentScale = (_baseScale * details.scale).clamp(1, _maxScale);
-
-    await _controller!.setZoomLevel(_currentScale);
-  }
-
+  // Builds the camera shot button
   Widget _buildButton() {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: Container(
+      child: SizedBox(
           height: 80,
           width: 80,
           child: FittedBox(
               child: FloatingActionButton(
             onPressed: _showTutorial ? null : _onTakePhotoPressed,
-            child: Icon(
+            child: const Icon(
               Icons.camera_alt,
               color: Colors.white,
             ),
@@ -162,12 +160,14 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     );
   }
 
+  // Initializes the camera
   Future<void> initCamera() async {
     _cameras = await availableCameras();
     // Initialize the camera with the first camera in the list
     await onNewCameraSelected(_cameras.first);
   }
 
+  // Updates the camera in case of change
   Future<void> onNewCameraSelected(CameraDescription description) async {
     final previousCameraController = _controller;
 
@@ -186,9 +186,6 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     }
     // Dispose the previous controller
     await previousCameraController?.dispose();
-
-    // Get max zoom level
-    double maxZoom = await cameraController.getMaxZoomLevel();
 
     // Replace with the new controller
     if (mounted) {
@@ -234,6 +231,7 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     }
   }
 
+  // Captures the photo and returns the file
   Future<XFile?> capturePhoto() async {
     final CameraController? cameraController = _controller;
     if (cameraController!.value.isTakingPicture) {
@@ -241,9 +239,9 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       return null;
     }
     try {
-      await cameraController.setFlashMode(FlashMode.torch); //optional
+      //await cameraController.setFlashMode(FlashMode.torch); //optional
       XFile file = await cameraController.takePicture();
-      await cameraController.setFlashMode(FlashMode.off); //optional
+      //await cameraController.setFlashMode(FlashMode.off); //optional
       return file;
     } on CameraException catch (e) {
       debugPrint('Error occured while taking picture: $e');
@@ -251,12 +249,14 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     }
   }
 
+  // Handles flow of photo capture and navigation to preview screen
   void _onTakePhotoPressed() async {
     final navigator = Navigator.of(context);
     final image = await capturePhoto();
     if (image != null) {
       navigator.push(
         MaterialPageRoute(
+          settings: const RouteSettings(name: 'photoReviewView'),
           builder: (context) => PhotoReviewView(
             image: image,
           ),

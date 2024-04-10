@@ -4,6 +4,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:claude_dart_flutter/claude_dart_flutter.dart' as claude;
 
 class HttpService {
+  // Posts the image to the server and awaits the prediction
   static Future<http.Response> postImage(XFile image) async {
     try {
       var uri = Uri.parse(
@@ -20,19 +21,12 @@ class HttpService {
     }
   }
 
+  // Posts a message to the server and awaits a response from the LLM
   static Future<claude.Response> postClaude(claude.Request request) async {
     claude.ClaudeService claudeService = claude.ClaudeService("API_KEY");
     claude.Response response =
         await claudeService.sendRequest(request: request);
 
     return response;
-  }
-
-  static Future<http.Response> post(String url, dynamic body) async {
-    return http.post(Uri.parse(url),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: body);
   }
 }

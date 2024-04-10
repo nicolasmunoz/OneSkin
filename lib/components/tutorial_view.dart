@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:one_skin/constants/constants.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
 class TutorialView extends StatefulWidget {
-  void Function() onPressed;
-  TutorialView({super.key, required this.onPressed});
+  final void Function() onPressed;
+  const TutorialView({super.key, required this.onPressed});
 
   @override
   State<TutorialView> createState() => _TutorialViewState();
@@ -13,20 +12,18 @@ class TutorialView extends StatefulWidget {
 
 class _TutorialViewState extends State<TutorialView> {
   int page = 0;
+  int maxPages = 2;
 
   List<Widget> tutorialPages = [
     Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 50),
-              color: Colors.red,
-            ),
-            SizedBox(
+            Images.tutorial1,
+            const SizedBox(
               height: 20,
             ),
-            Expanded(
+            const Expanded(
                 child: Text(
               'Take photo in well-lit room with mole fully visible in the photo',
               textAlign: TextAlign.center,
@@ -35,17 +32,14 @@ class _TutorialViewState extends State<TutorialView> {
           ],
         )),
     Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 50),
-              color: Colors.red,
-            ),
-            SizedBox(
+            Images.tutorial2,
+            const SizedBox(
               height: 20,
             ),
-            Expanded(
+            const Expanded(
                 child: Text(
               'Remove any objects covering the mole (hair, jewelry, etc)',
               textAlign: TextAlign.center,
@@ -53,32 +47,14 @@ class _TutorialViewState extends State<TutorialView> {
             ))
           ],
         )),
-    Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 50),
-            color: Colors.red,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-              child: Text(
-            'Place mole in center of the square and take photo',
-            textAlign: TextAlign.center,
-            softWrap: true,
-          ))
-        ],
-      ),
-    )
   ];
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Dialog(
+      backgroundColor: ThemeColors.darkBackground,
+      surfaceTintColor: ThemeColors.darkBackground,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -100,9 +76,9 @@ class _TutorialViewState extends State<TutorialView> {
             padding: const EdgeInsets.all(20),
             child: PageViewDotIndicator(
               currentItem: page,
-              count: 3,
+              count: maxPages,
               unselectedColor: const Color(0xFFD9D9D9),
-              selectedColor: const Color(0xFF185A7F),
+              selectedColor: Theme.of(context).colorScheme.primary,
             ),
           )
         ],

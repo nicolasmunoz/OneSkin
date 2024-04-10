@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:one_skin/components/results_widget.dart';
+import 'package:one_skin/constants/constants.dart';
 import 'package:one_skin/models/diagnosis_model.dart';
 import 'package:one_skin/services/http_service.dart';
 
@@ -25,6 +27,7 @@ class _ResultsViewState extends State<ResultsView> {
     super.initState();
   }
 
+  // Processes the image by calling the API endpoint to handle the prediction
   Future<void> processImage() async {
     setState(() {
       _loading = true;
@@ -46,11 +49,14 @@ class _ResultsViewState extends State<ResultsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Images.logo,
+      ),
       body: _loading ? _buildLoading() : _buildResults(),
     );
   }
 
+  // Builds the loading indicator
   Widget _buildLoading() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -59,10 +65,10 @@ class _ResultsViewState extends State<ResultsView> {
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.5,
             height: MediaQuery.of(context).size.width * 0.5,
-            child: CircularProgressIndicator(),
+            child: const CircularProgressIndicator(),
           ),
         ),
-        Text(
+        const Text(
           'Analyzing image...',
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -71,27 +77,37 @@ class _ResultsViewState extends State<ResultsView> {
     );
   }
 
+  // Builds the results view, displaying the photo and guidance
   Widget _buildResults() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(30),
-          child: AspectRatio(
-              aspectRatio: 1, // Set aspect ratio to 1:1 for a square
-              child: Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                clipBehavior: Clip.hardEdge,
-                child: Image.file(
-                  File(widget.image.path),
-                  fit: BoxFit.cover,
-                ),
-              )),
-        ),
-        Container(
-          child: Text(diagnosis?.diagnosis ?? 'No Diagnosis Available'),
-        )
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: AspectRatio(
+                aspectRatio: 1, // Set aspect ratio to 1:1 for a square
+                child: Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                  clipBehavior: Clip.hardEdge,
+                  child: Image.file(
+                    File(widget.image.path),
+                    fit: BoxFit.cover,
+                  ),
+                )),
+          ),
+          const SizedBox(height: 10),
+          OutlinedButton(
+              onPressed: () =>
+                  Navigator.of(context).popUntil(ModalRoute.withName('/')),
+              child: const Text('Retake')),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: ResultsWidget(diagnosis: diagnosis),
+          )
+        ],
+      ),
     );
   }
 
