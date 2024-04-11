@@ -6,12 +6,14 @@ class Images {
       const Image(image: AssetImage('assets/tutorial_1.png'));
   static Image tutorial2 =
       const Image(image: AssetImage('assets/tutorial_2.png'));
-  static Image diagnosisImage =
-      const Image(image: AssetImage('assets/mdi_chart-bar.png'));
-  static Image recommendationImage =
-      const Image(image: AssetImage('assets/mdi_medical-bag.png'));
-  static Image doubleArrow =
-      const Image(image: AssetImage('assets/double_arrow.png'));
+  static Image hipaa = const Image(image: AssetImage('assets/hipaa.png'));
+  static Image largeLogo =
+      const Image(image: AssetImage('assets/large_logo.png'));
+  static Image homeHero =
+      const Image(image: AssetImage('assets/home_hero.png'));
+  static Icon diagnosisImage = const Icon(Icons.bar_chart_rounded);
+  static Icon recommendationImage = const Icon(Icons.medical_services_rounded);
+  static Icon doubleArrow = const Icon(Icons.mobile_screen_share_rounded);
 }
 
 class ThemeColors {

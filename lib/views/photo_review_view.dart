@@ -61,11 +61,9 @@ class PhotoReviewViewState extends State<PhotoReviewView> {
           decoration: const BoxDecoration(
               //borderRadius: BorderRadius.circular(10),
               color: Color(0xFF1e1f25)),
-          child: Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [_buildTips(), Spacer(), _buildButtons()],
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [_buildTips(), Spacer(), _buildButtons()],
           ),
         ),
       ),

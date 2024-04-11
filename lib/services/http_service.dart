@@ -7,8 +7,8 @@ class HttpService {
   // Posts the image to the server and awaits the prediction
   static Future<http.Response> postImage(XFile image) async {
     try {
-      var uri = Uri.parse(
-          'https://3c09-12-162-124-34.ngrok-free.app/analyze/picture');
+      var uri =
+          Uri.parse('https://oneskin-ai.ue.r.appspot.com/analyze/picture');
       http.MultipartRequest request = http.MultipartRequest('POST', uri)
         ..files.add(http.MultipartFile.fromBytes(
             "file", await image.readAsBytes(),

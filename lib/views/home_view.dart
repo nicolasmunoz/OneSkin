@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_skin/constants/constants.dart';
 import 'package:one_skin/views/camera_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -13,18 +14,44 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            FilledButton(
-                onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        settings: const RouteSettings(name: '/cameraView'),
-                        builder: (context) => const CameraView(),
-                      ),
-                    ),
-                child: const Text('Get Started'))
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Align(alignment: Alignment.topLeft, child: Images.hipaa),
+              Images.homeHero,
+              SizedBox(
+                height: 60,
+              ),
+              Images.largeLogo,
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'AI-Powered Skin Cancer Detection for a Healthier Tomorrow',
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  Expanded(
+                    child: FilledButton(
+                        onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                settings:
+                                    const RouteSettings(name: '/cameraView'),
+                                builder: (context) => const CameraView(),
+                              ),
+                            ),
+                        child: const Text('Get Started')),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 80),
+            ],
+          ),
         ),
       ),
     );
