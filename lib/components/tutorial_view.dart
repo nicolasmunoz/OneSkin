@@ -72,20 +72,19 @@ class _TutorialViewState extends State<TutorialView> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(height: 40),
+        const SizedBox(height: 40),
         SizedBox(
             height: size.height * 0.5,
             width: size.width,
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Disclosure',
+                  'Disclaimer',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                   child: Text(
                     'The advice provided by this app is not a substitute for professional medical guidance and should be used for informational purposes only.',
                     style: TextStyle(fontSize: 16),

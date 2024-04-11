@@ -14,7 +14,8 @@ class OneSkin extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    MaterialTheme theme = const MaterialTheme(TextTheme());
+    MaterialTheme theme = const MaterialTheme(
+        TextTheme(displayMedium: TextStyle(fontFamily: 'Manrope')));
     return MaterialApp(
       title: 'One Skin',
       debugShowCheckedModeBanner: false,
