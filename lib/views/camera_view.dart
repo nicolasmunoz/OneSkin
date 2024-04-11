@@ -19,7 +19,6 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   bool _showTutorial = true;
 
   double _currentScale = 1.0;
-  final double _baseScale = 1.0;
   final double _maxScale = 10;
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:one_skin/themes/theme.dart';
 import 'package:one_skin/views/camera_view.dart';
+import 'package:one_skin/views/home_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ class OneSkin extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: theme.dark(),
       initialRoute: '/',
-      home: const CameraView(),
+      home: const HomeView(),
     );
   }
 }

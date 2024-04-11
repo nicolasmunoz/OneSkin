@@ -60,10 +60,7 @@ class _TutorialViewState extends State<TutorialView> {
         children: [
           Align(
             alignment: Alignment.topRight,
-            child: CloseButton(onPressed: () {
-              widget.onPressed();
-              Navigator.of(context, rootNavigator: true).pop();
-            }),
+            child: CloseButton(onPressed: close),
           ),
           SizedBox(
               height: size.height * 0.5,
@@ -74,16 +71,26 @@ class _TutorialViewState extends State<TutorialView> {
               )),
           Padding(
             padding: const EdgeInsets.all(20),
-            child: PageViewDotIndicator(
-              currentItem: page,
-              count: maxPages,
-              unselectedColor: const Color(0xFFD9D9D9),
-              selectedColor: Theme.of(context).colorScheme.primary,
-            ),
+            child: page == 1
+                ? FilledButton(
+                    onPressed: close,
+                    child: const Text('Get Started'),
+                  )
+                : PageViewDotIndicator(
+                    currentItem: page,
+                    count: maxPages,
+                    unselectedColor: const Color(0xFFD9D9D9),
+                    selectedColor: Theme.of(context).colorScheme.primary,
+                  ),
           )
         ],
       ),
     );
+  }
+
+  void close() {
+    widget.onPressed();
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   void changePage(int newPage) => setState(() => page = newPage);

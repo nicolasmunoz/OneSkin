@@ -98,8 +98,8 @@ class _ResultsViewState extends State<ResultsView> {
           ),
           const SizedBox(height: 10),
           OutlinedButton(
-              onPressed: () =>
-                  Navigator.of(context).popUntil(ModalRoute.withName('/')),
+              onPressed: () => Navigator.of(context)
+                  .popUntil(ModalRoute.withName('/cameraView')),
               child: const Text('Retake')),
           const SizedBox(height: 20),
           Padding(
