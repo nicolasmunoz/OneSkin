@@ -12,17 +12,20 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          FilledButton(
-              onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      settings: const RouteSettings(name: 'cameraView'),
-                      builder: (context) => const CameraView(),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FilledButton(
+                onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        settings: const RouteSettings(name: '/cameraView'),
+                        builder: (context) => const CameraView(),
+                      ),
                     ),
-                  ),
-              child: const Text('Get Started'))
-        ],
+                child: const Text('Get Started'))
+          ],
+        ),
       ),
     );
   }

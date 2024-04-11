@@ -17,6 +17,7 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   late final List<CameraDescription> _cameras;
 
   bool _showTutorial = true;
+  bool _showDisclosure = true;
 
   double _currentScale = 1.0;
   final double _maxScale = 10;
@@ -59,12 +60,12 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       barrierDismissible: false,
       context: context,
       builder: (_) => TutorialView(
-            onPressed: _toggleTutorial,
-          ));
+          onPressed: _toggleTutorial, showDisclosure: _showDisclosure));
 
   // Toggles whether to display camera preview
   void _toggleTutorial() => setState(() {
         _showTutorial = !_showTutorial;
+        _showDisclosure = false;
       });
 
   // Builds the main camera view
