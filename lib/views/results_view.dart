@@ -68,11 +68,8 @@ class _ResultsViewState extends State<ResultsView> {
             child: const CircularProgressIndicator(),
           ),
         ),
-        const Text(
-          'Analyzing image...',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        )
+        Text('Analyzing image...',
+            textAlign: TextAlign.center, style: TextStyles.smallHeadlineBlue)
       ],
     );
   }

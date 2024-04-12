@@ -2,11 +2,17 @@ class Diagnosis {
   String? diagnosis;
   double? confidence;
   String? risk;
+  String? riskTitle;
   String? description;
+  String? recommendationTitle;
+  String? recommendationDescription;
 
   Diagnosis.fromJson(Map<String, dynamic> json)
-      : diagnosis = json['diagnosis'],
-        confidence = json['confidence'],
+      : confidence = json['confidence'],
         risk = json['risk'],
-        description = json['description'];
+        riskTitle = json['riskTitle'],
+        diagnosis = json['diagnosis'],
+        description = json['description'],
+        recommendationTitle = json['recommendationTitle'],
+        recommendationDescription = json['recommendationDescription'];
 }

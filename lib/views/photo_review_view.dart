@@ -71,7 +71,7 @@ class PhotoReviewViewState extends State<PhotoReviewView> {
   }
 
   Widget _buildTips() {
-    return const Column(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
@@ -81,35 +81,31 @@ class PhotoReviewViewState extends State<PhotoReviewView> {
               child: Text(
                 'Review photo before submission',
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyles.smallHeadline,
               )),
         ),
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                'Tips for best results:',
-                textAlign: TextAlign.left,
-              ),
+              child: Text('Tips for best results:',
+                  textAlign: TextAlign.left, style: TextStyles.largeBody),
             )),
-        SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 50),
             child: SuperBulletList(
-              separator: SizedBox(),
+              separator: SizedBox(height: 5),
               items: [
-                Text('Is taken in a well-lit room'),
-                Text('Mole is fully visible in the frame'),
-                Text(
-                    'No objects are obstructing the view (jewelry, hair, etc)'),
+                Text('Is taken in a well-lit room',
+                    style: TextStyles.largeBody),
+                Text('Mole is fully visible in the frame',
+                    style: TextStyles.largeBody),
+                Text('No objects are obstructing the view (jewelry, hair, etc)',
+                    style: TextStyles.largeBody),
               ],
             )),
-        SizedBox(
-          height: 40,
-        ),
+        const SizedBox(height: 40),
       ],
     );
   }

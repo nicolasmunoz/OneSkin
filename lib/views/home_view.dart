@@ -21,16 +21,12 @@ class _HomeViewState extends State<HomeView> {
             children: [
               Align(alignment: Alignment.topLeft, child: Images.hipaa),
               Images.homeHero,
-              SizedBox(
-                height: 60,
-              ),
+              const SizedBox(height: 60),
               Images.largeLogo,
-              SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Text(
                 'AI-Powered Skin Cancer Detection for a Healthier Tomorrow',
-                style: TextStyle(fontSize: 20),
+                style: TextStyles.smallHeadlineBlue,
                 textAlign: TextAlign.center,
               ),
               const Spacer(),

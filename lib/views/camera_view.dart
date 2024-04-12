@@ -43,7 +43,7 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
                   _toggleTutorial();
                   _showDialog();
                 },
-                icon: const Icon(Icons.question_mark))
+                icon: Icon(Icons.question_mark, color: ThemeColors.blueText))
           ],
         ),
         body: SafeArea(child: _buildView()),
@@ -90,7 +90,7 @@ class CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       const SizedBox(
         height: 50,
       ),
-      const Text('Tap camera button when ready'),
+      Text('Tap camera button when ready', style: TextStyles.largeBody),
       const SizedBox(
         height: 50,
       ),

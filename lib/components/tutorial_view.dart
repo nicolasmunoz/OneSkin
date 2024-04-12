@@ -27,14 +27,19 @@ class _TutorialViewState extends State<TutorialView> {
     Container(
         padding: const EdgeInsets.all(20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 60,
+            ),
             Images.tutorial1,
             const SizedBox(
               height: 20,
             ),
-            const Expanded(
+            Expanded(
                 child: Text(
               'Take photo in well-lit room with mole fully visible in the photo',
+              style: TextStyles.largeBody,
               textAlign: TextAlign.center,
               softWrap: true,
             ))
@@ -43,14 +48,19 @@ class _TutorialViewState extends State<TutorialView> {
     Container(
         padding: const EdgeInsets.all(20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 60,
+            ),
             Images.tutorial2,
             const SizedBox(
               height: 20,
             ),
-            const Expanded(
+            Expanded(
                 child: Text(
               'Remove any objects covering the mole (hair, jewelry, etc)',
+              style: TextStyles.largeBody,
               textAlign: TextAlign.center,
               softWrap: true,
             ))
@@ -76,19 +86,29 @@ class _TutorialViewState extends State<TutorialView> {
         SizedBox(
             height: size.height * 0.5,
             width: size.width,
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Disclaimer',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                const SizedBox(
+                  height: 100,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.warning_rounded),
+                    SizedBox(width: 10),
+                    Text(
+                      'Disclaimer',
+                      style: TextStyles.smallHeadline,
+                    ),
+                  ],
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Text(
-                    'The advice provided by this app is not a substitute for professional medical guidance and should be used for informational purposes only.',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                      'The advice provided by this app is not a substitute for professional medical guidance and should be used for informational purposes only.',
+                      style: TextStyles.largeBody),
                 )
               ],
             )),
@@ -121,19 +141,22 @@ class _TutorialViewState extends State<TutorialView> {
               onPageChanged: changePage,
               children: tutorialPages,
             )),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: page == 1
-              ? FilledButton(
-                  onPressed: close,
-                  child: const Text('Get Started'),
-                )
-              : PageViewDotIndicator(
-                  currentItem: page,
-                  count: maxPages,
-                  unselectedColor: const Color(0xFFD9D9D9),
-                  selectedColor: Theme.of(context).colorScheme.primary,
-                ),
+        SizedBox(
+          height: 100,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: page == 1
+                ? FilledButton(
+                    onPressed: close,
+                    child: const Text('Get Started'),
+                  )
+                : PageViewDotIndicator(
+                    currentItem: page,
+                    count: maxPages,
+                    unselectedColor: const Color(0xFFD9D9D9),
+                    selectedColor: Theme.of(context).colorScheme.primary,
+                  ),
+          ),
         )
       ],
     );
