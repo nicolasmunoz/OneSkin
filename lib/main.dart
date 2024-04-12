@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:one_skin/themes/theme.dart';
-import 'package:one_skin/views/camera_view.dart';
 import 'package:one_skin/views/home_view.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const OneSkin());
+  FlutterNativeSplash.remove();
 }
 
 class OneSkin extends StatelessWidget {
